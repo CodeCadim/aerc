@@ -73,6 +73,7 @@ func (Move) CompleteMFS(arg string) []string {
 }
 
 func (m Move) Execute(args []string) error {
+	log.Debugf("Je suis dans move.go : Execute function")
 	h := newHelper()
 	acct, err := h.account()
 	if err != nil {

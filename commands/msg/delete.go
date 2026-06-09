@@ -71,6 +71,7 @@ func mayDeleteOnSelectedDirectory() bool {
 }
 
 func (d Delete) Execute(args []string) error {
+	log.Debugf("Je suis dans delete.go : Execute function")
 	if !mayDeleteOnSelectedDirectory() {
 		return errors.New("Forbidden by `restrict-delete` setting")
 	}
@@ -150,14 +151,14 @@ func (d Delete) Execute(args []string) error {
 	return nil
 }
 
-func findNextNonDeleted(deleted []models.UID, store *lib.MessageStore) *models.MessageInfo {
+func findNextNonDeleted(marked []models.UID, store *lib.MessageStore) *models.MessageInfo {
 	var next, previous *models.MessageInfo
-	stepper := []func(){store.Next, store.Prev}
+	stepper := []func(){store.Prev, store.Next}
 	for _, stepFn := range stepper {
 		previous = nil
 		for {
 			next = store.Selected()
-			if next != nil && !slices.Contains(deleted, next.Uid) {
+			if next != nil && !slices.Contains(marked, next.Uid) {
 				if _, deleted := store.Deleted[next.Uid]; !deleted {
 					return next
 				}
