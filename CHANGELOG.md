@@ -3,6 +3,72 @@
 All notable changes to aerc will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [0.21.2](https://git.sr.ht/~rjarry/aerc/refs/0.21.2) - 2026-06-19
+
+### Added
+
+- `:reload` is now invoked when `SIGHUP` is received by the `aerc` process.
+- Add support for Labels when using imap.
+- A custom directory can now be specified for temporary files.
+- New `:toggle-sidebar` command to hide/show the sidebar.
+- New `[viewer].html-inline-images` option to replace `<img src="cid:...">`
+  tags in `text/html` parts with their related `image/*` part data encoded in
+  base64. For this to work with sixel compatible terminals, you need to update
+  your filters with `text/html = ! html -sixel` and install `img2sixel`.
+- Diffstat summary lines before patches are now highlighted similar to git diff
+  --stat.
+- Trailing whitespace in diff addition, deletion and context lines are now
+  highlighted with a red background by default, similar to git's
+  `diff.wsErrorHighlight` option set to `all`. Configurable with
+  `[viewer].diff_whitespace` styleset option.
+- The editor and the message viewer can now be centered on screen using a fixed
+  width.
+- New styleset objects available to customize special headers in the message
+  viewer.
+- `:menu` commands within a message view can be supplied with the links
+  extracted from the message using the `-l` flag.
+- New `:repeat` command.
+- `:toggle-folder` command to toggle directory tree expand/collapse state.
+- Added `-u` and `-U` to the mark command to mark messages based on read-status.
+
+### Fixed
+
+- Fixed occasional data loss in export result of `export-mbox`.
+- Crash when switching accounts quickly after sending a reply with
+  archive-on-reply enabled.
+- Quick terminal outputs (e.g. from pipe command) will no longer disappear on a
+  mouse event. They will only disappear on a keypress as described in the
+  status bar.
+- `carddav-query` now correctly parses vCard contacts with folded lines and
+  parameterized properties.
+
+### Changed
+
+- Temporary files for messages being composed now reside in the system's proper
+  state home directory.
+- `:flag` and `:delete` on multiple messages now stop on the first error on
+  `notmuch` accounts.
+- The notmuch maildir-store option has been replaced by enable-maildir
+  (default: true). The maildir root is always obtained from the notmuch
+  database configuration.
+- The notmuch source URL no longer accepts an explicit database path or config
+  query parameter. Database and configuration are now discovered automatically.
+  An optional profile name can be specified as the URL hostname.
+
+### Deprecated
+
+- The notmuch maildir-store option and explicit database paths in the source
+  URL now emit deprecation warnings.
+
+### Closed Tickets
+
+- [#185: ](https://todo.sr.ht/~rjarry/aerc/185)
+- [#252: ](https://todo.sr.ht/~rjarry/aerc/252)
+- [#290: ](https://todo.sr.ht/~rjarry/aerc/290)
+- [#319: ](https://todo.sr.ht/~rjarry/aerc/319)
+- [#320: ](https://todo.sr.ht/~rjarry/aerc/320)
+- [#325: ](https://todo.sr.ht/~rjarry/aerc/325)
+
 ## [0.21.0](https://git.sr.ht/~rjarry/aerc/refs/0.21.0) - 2025-08-28
 
 ### Added
